@@ -1,0 +1,5 @@
+MODEL_NAME = "gpt-5-mini"
+PROMPT_NAME = "invoice-extraction-gpt5-prompt"
+PROMPT_VERSION = "1"
+REASONING = "medium"
+MODEL_URI = "models:/m-1b0300a8d4684d87aadfd2ededb0c29a"

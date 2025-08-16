@@ -1,0 +1,213 @@
+[
+    {
+        "menu": {
+            "nm": "-TICKET CP",
+            "num": "901016",
+            "unitprice": "60.000",
+            "cnt": "2",
+            "price": "60.000"
+        },
+        "sub_total": {
+            "price": "60.000",
+            "discount_price": "-60.000",
+            "tax_price": "5.455"
+        },
+        "total": {
+            "total_price": "60.000",
+            "creditcardprice": "60.000",
+            "menuqty_cnt": "2.00"
+        }
+    },
+    {
+        "menu": [
+            {
+                "nm": "J.STB PROMO",
+                "price": "17500"
+            },
+            {
+                "nm": "Y.B.BAT",
+                "price": "46000"
+            },
+            {
+                "nm": "Y.BASO PROM",
+                "price": "27500"
+            }
+        ],
+        "total": {
+            "total_price": "91000",
+            "cashprice": "91000"
+        }
+    },
+    {
+        "menu": {
+            "nm": "JASMINE MT (L)",
+            "num": "1",
+            "unitprice": "24.000",
+            "cnt": "1",
+            "price": "24.000",
+            "sub": {
+                "nm": "COCONUT JELLY (L)",
+                "unitprice": "4.000",
+                "price": "4.000"
+            }
+        },
+        "sub_total": {
+            "price": "28.000"
+        },
+        "total": {
+            "total_price": "28.000",
+            "cashprice": "100.000",
+            "changeprice": "72.000",
+            "menutype_cnt": "1"
+        }
+    },
+    {
+        "menu": {
+            "nm": "DONAT GULA",
+            "unitprice": "@11000",
+            "cnt": "1X",
+            "etc": "1.00xITEMs",
+            "price": "11,000",
+            "itemsubtotal": "11,000"
+        },
+        "sub_total": {
+            "price": "11,000"
+        },
+        "total": {
+            "total_price": "11,000",
+            "cashprice": "11,000",
+            "menuqty_cnt": "1X"
+        }
+    },
+    {
+        "menu": [
+            {
+                "nm": "ICE BLACKCOFFE",
+                "cnt": "2",
+                "price": "82,000"
+            },
+            {
+                "nm": "AVOCADO COFFEE",
+                "cnt": "1",
+                "price": "61,000"
+            },
+            {
+                "nm": "CHIKEN KATSU FF",
+                "cnt": "1",
+                "price": "51,000"
+            }
+        ],
+        "sub_total": {
+            "price": "194,000",
+            "discount_price": "19,400"
+        },
+        "total": {
+            "total_price": "174,600",
+            "cashprice": "200,000",
+            "changeprice": "25,400"
+        }
+    },
+    {
+        "menu": {
+            "nm": "TRAD KY TOAST CARTE",
+            "unitprice": "28.182",
+            "cnt": "ITEMS 1.00",
+            "price": "28.182"
+        },
+        "sub_total": {
+            "price": "28.182",
+            "tax_price": "2.818"
+        },
+        "total": {
+            "total_price": "31.000",
+            "cashprice": "31.000"
+        }
+    },
+    {
+        "menu": [
+            {
+                "nm": "EGG TART",
+                "cnt": "1",
+                "price": "13,000"
+            },
+            {
+                "nm": "CHOCO CUSTARD PASTRY",
+                "cnt": "2",
+                "price": "24,000"
+            },
+            {
+                "nm": "REDBEAN BREAD",
+                "cnt": "1",
+                "price": "9,000"
+            }
+        ],
+        "total": {
+            "total_price": "46,000",
+            "cashprice": "50,000",
+            "changeprice": "4,000"
+        }
+    },
+    {
+        "menu": [
+            {
+                "nm": "Kupon 15",
+                "price": "100,000"
+            },
+            {
+                "nm": "ADD CHICKEN BOX",
+                "price": "709"
+            }
+        ],
+        "sub_total": {
+            "price": "100,709",
+            "tax_price": "10,071"
+        },
+        "total": {
+            "total_price": "111,000",
+            "cashprice": "Rp.111,000"
+        }
+    },
+    {
+        "menu": [
+            {
+                "nm": "[REG] BLACK SAKURA",
+                "cnt": "1",
+                "price": "45,455"
+            },
+            {
+                "nm": "COOKIE DOH SAUCES",
+                "cnt": "1",
+                "price": "0"
+            },
+            {
+                "nm": "NATA DE COCO",
+                "cnt": "1",
+                "price": "0"
+            }
+        ],
+        "sub_total": {
+            "price": "45,455",
+            "tax_price": "4,545",
+            "othersvc_price": "0"
+        },
+        "total": {
+            "total_price": "50,000",
+            "creditcardprice": "50,000"
+        }
+    },
+    {
+        "menu": {
+            "nm": "Bumbu Kaldu Ayam 1",
+            "unitprice": "36000",
+            "price": "36000",
+            "itemsubtotal": "36000"
+        },
+        "sub_total": {
+            "price": "36000"
+        },
+        "total": {
+            "cashprice": "50000",
+            "changeprice": "14000"
+        }
+    }
+]
