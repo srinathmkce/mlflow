@@ -1,3 +1,4 @@
+import os
 from io import BytesIO
 from collections import defaultdict
 import base64
@@ -13,22 +14,6 @@ def pil_to_base64(pil_image):
     pil_image.save(buffer, format="JPEG")
     return base64.b64encode(buffer.getvalue()).decode("utf-8")
 
-
-# def process_dataset(model_name, dataset, client, system_prompt):
-#     """Run inference and collect responses and ground truths."""
-#     response_list = []
-#     ground_truth_list = []
-#     for data in tqdm(dataset):
-#         image = data['image']
-#         ground_truth = json.loads(data['ground_truth'])['gt_parse']
-#         image_base64 = pil_to_base64(image)
-#         response = run_openai_inference(model_name=model_name, client=client, image_base64=image_base64, system_prompt=system_prompt)
-#         response_list.append(response)
-#         ground_truth_list.append(ground_truth)
-#     return response_list, ground_truth_list
-
-
-
 def generate_urls(dataset):
     url_list = []
     ground_truth_list = []
@@ -40,30 +25,6 @@ def generate_urls(dataset):
         ground_truth_list.append(ground_truth)
     return url_list, ground_truth_list
 
-
-# # @mlflow.trace(span_type="LLM")
-# def run_openai_inference(model_name, client, image_base64, system_prompt):
-#     """Send image and prompt to OpenAI model and return response."""
-#     response = client.responses.create(
-#         model=model_name,
-#         reasoning={
-#             "effort": "medium",
-#         },
-#         input=[
-#             {
-#                 "role": "user",
-#                 "content": [
-#                     { "type": "input_text", "text": system_prompt },
-#                     {
-#                         "type": "input_image",
-#                         "image_url": f"data:image/jpeg;base64,{image_base64}",
-#                         # "detail": "low"
-#                     },
-#                 ],
-#             }
-#         ],
-#     )
-#     return response
 
 def flatten_json(y, prefix=''):
     """Flatten nested JSON into dot notation keys."""
@@ -114,6 +75,7 @@ def calculate_invoice_accuracies(ground_truth_list, response_list):
             "accuracy": accuracy
         })
     invoice_metrics_df = pd.DataFrame(invoice_metrics)
+    invoice_metrics_df.to_csv(os.path.join("artifacts", "invoice_metrics.csv"))
     return invoice_metrics_df
 
 
@@ -151,5 +113,6 @@ def key_level_metrics(gt_list, pred_list):
         recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
         f1 = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0.0
         metrics[k] = {'precision': precision, 'recall': recall, 'f1': f1, 'tp': tp, 'fp': fp, 'fn': fn}
-    return metrics
-
+    key_metrics_df = pd.DataFrame(metrics).T.reset_index(names='key')
+    key_metrics_df.to_csv(os.path.join("artifacts", "key_metrics.csv"))
+    return key_metrics_df
