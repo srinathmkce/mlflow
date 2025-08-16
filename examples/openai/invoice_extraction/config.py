@@ -1,6 +1,0 @@
-MLFLOW_TRACKING_URI = "http://localhost:8080/"
-MODEL_NAME = "gpt-5-mini"
-REASONING = "low"
-MLFLOW_EXPERIMENT_NAME = "cord-v2-gpt5-baseline"
-PROMPT_NAME = f"invoice-extraction-{MODEL_NAME}-prompt"
-PROMPT_VERSION = "1"
