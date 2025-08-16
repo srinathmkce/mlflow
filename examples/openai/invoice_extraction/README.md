@@ -17,6 +17,16 @@ We use the CORD-v2 dataset available on Hugging Face: [CORD-v2 on HuggingFace](h
 
 For this experiment, we focus exclusively on the test split, which contains 100 invoice samples. This subset provides a standardized benchmark for evaluating invoice field extraction using GPT-5-mini and GPT-5-nano, while keeping the experiment lightweight and reproducible.
 
+The dataset is under [Creative Commons Attribution 4.0 International
+License][cc-by].
+
+[![CC BY 4.0][cc-by-image]][cc-by]
+
+[cc-by]: http://creativecommons.org/licenses/by/4.0/
+[cc-by-image]: https://i.creativecommons.org/l/by/4.0/88x31.png
+[cc-by-shield]: https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg
+
+
 ### Steps for benchmarking
 
 #### Start the MLflow server
@@ -77,13 +87,13 @@ Run the [log_model_and_prompt.ipynb](./log_model_and_prompt.ipynb) notebook to r
    - Publish the summary such as **input, output tokens, invoice level metrics, key level metrics**
 
 The individual invoice extractions can be tracked in the Traces tab
-[traces](./screenshots/mlflow-traces.png)
+![traces](./screenshots/mlflow-traces.png)
 
 Overall model summary can be tracked in the `<MODELNAME>-summary`
-[summary](./screenshots/mlflow-summary.png)
+![summary](./screenshots/mlflow-summary.png)
 
 The invoice level metrics are exported as the file
-[metrics](./screenshots/mlflow-invoice-level-metrics.png)
+![metrics](./screenshots/mlflow-invoice-level-metrics.png)
 
 Compare the metrics across models
-[comparison-table](./screenshots/comparison.png)
+![comparison-table](./screenshots/comparison.png)
