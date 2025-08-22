@@ -26,4 +26,4 @@ def log_invoice_extraction_model(model_name, reasoning, prompt_name, prompt_vers
             ],
         )
 
-    return model_info.model_uri
+    return model_info
