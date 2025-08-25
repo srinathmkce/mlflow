@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+
 def log_invoice_extraction_model(model_name, reasoning, prompt_name, prompt_version):
     system_prompt = mlflow.genai.load_prompt(f"prompts:/{prompt_name}/{prompt_version}").template
     with mlflow.start_run(run_name=f"{model_name}-{reasoning}") as run:
@@ -27,3 +28,5 @@ def log_invoice_extraction_model(model_name, reasoning, prompt_name, prompt_vers
         )
 
     return model_info
+
+

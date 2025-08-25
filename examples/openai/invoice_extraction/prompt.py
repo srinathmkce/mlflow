@@ -13,7 +13,7 @@ def register_prompt(prompt_name):
     5. In case of prices and currencies, ensure to maintain the original format without any modifications.
 
     Schema:
-    {schema}
+    {{schema}}
 
     Output:
     Return valid, minimal JSON matching this schema - no extraneous keys or null values.

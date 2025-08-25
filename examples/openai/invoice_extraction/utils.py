@@ -116,3 +116,27 @@ def key_level_metrics(gt_list, pred_list):
     key_metrics_df = pd.DataFrame(metrics).T.reset_index(names='key')
     key_metrics_df.to_csv(os.path.join("artifacts", "key_metrics.csv"))
     return key_metrics_df
+
+def calculate_individual_invoice_accuracies(ground_truth, output):
+    """Calculate per-invoice accuracy and return a DataFrame."""
+    invoice_metrics = []
+    gt_flat = flatten_json(ground_truth)
+    gt_flat = apply_postprocessing(gt_flat)
+    pred_flat = flatten_json(output)
+    pred_flat = apply_postprocessing(pred_flat)
+    total_keys = len(gt_flat)
+    print("<<<<<<<<<< GT Flat: ", gt_flat)
+    print("<<<<<<<<<< Pred Flat: ", pred_flat)
+    # Create a dataframe with following columns, ground_truth_value, predicted_value, match (True or False) and calculate the overall accuracy based on the match
+    for k in gt_flat:
+        invoice_metrics.append({
+            "ground_truth_value": gt_flat[k],
+            "predicted_value": pred_flat.get(k, ""),
+            "match": str(gt_flat[k]).strip() == str(pred_flat.get(k, "")).strip()
+        })
+    invoice_metrics_df = pd.DataFrame(invoice_metrics)
+
+    print("<<<<<<<<<< Invoice Metrics DF: ", invoice_metrics_df)
+    accuracy = invoice_metrics_df["match"].mean()
+    print("<<<<<<<<<< Accuracy: ", accuracy)
+    return invoice_metrics_df, accuracy
