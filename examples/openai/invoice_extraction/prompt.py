@@ -19,9 +19,31 @@ def register_prompt(prompt_name):
     Return valid, minimal JSON matching this schema - no extraneous keys or null values.
     """
 
+    few_shot_prompt = """---
+
+    Few-shot Examples:
+
+    Example 1:
+    {{example1}}
+
+    ---
+
+    Example 2:
+    {{example2}}
+
+    ---
+    Example 3:
+    {{example3}}"""
+
+    if "fewshot" in prompt_name:
+        system_prompt = system_prompt + few_shot_prompt
+
     print(system_prompt)
 
-    mlflow.genai.register_prompt(
-        name = prompt_name,
-        template = system_prompt
-    )
+    if not mlflow.genai.search_prompts(filter_string=f"name='{prompt_name}'"):
+        mlflow.genai.register_prompt(
+            name = prompt_name,
+            template = system_prompt
+        )
+    else:
+        print(f"Prompt - {prompt_name} already exists.")
