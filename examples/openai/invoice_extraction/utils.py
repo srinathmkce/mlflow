@@ -129,6 +129,7 @@ def calculate_individual_invoice_accuracies(ground_truth, output):
     # Create a dataframe with following columns, ground_truth_value, predicted_value, match (True or False) and calculate the overall accuracy based on the match
     for k in gt_flat:
         invoice_metrics.append({
+            "key": k,
             "ground_truth_value": gt_flat[k],
             "predicted_value": pred_flat.get(k, ""),
             "match": str(gt_flat[k]).strip() == str(pred_flat.get(k, "")).strip()
@@ -136,7 +137,7 @@ def calculate_individual_invoice_accuracies(ground_truth, output):
     invoice_metrics_df = pd.DataFrame(invoice_metrics)
 
     accuracy = invoice_metrics_df["match"].mean()
-    return invoice_metrics_df, accuracy
+    return invoice_metrics_df, round(accuracy, 2) * 100
 
 def convert_base64_to_pil(image_base64):
     """Convert a base64-encoded image to a PIL Image."""
