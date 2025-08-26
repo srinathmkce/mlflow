@@ -46,9 +46,20 @@ def flatten_json(y, prefix=''):
 def apply_postprocessing(data):
     # if the key contains price replace comma by . in the price columns
     for key in data.keys():
-        if "price" in key.lower():
+        if "price" in key.lower() and isinstance(data[key], str):
             data[key] = data[key].replace(",", ".")
     return data
+
+
+def fix_data_type_mismatch(gt, pred):
+    if 'menu' in gt and 'menu' in pred:
+        if isinstance(gt['menu'], dict) and isinstance(pred['menu'], list):
+            gt['menu'] = [gt['menu']]
+        
+        if isinstance(gt['menu'], list) and isinstance(pred['menu'], dict):
+            pred['menu'] = [pred['menu']]
+
+    return gt, pred
 
 def calculate_invoice_accuracies(ground_truth_list, response_list):
     """Calculate per-invoice accuracy and return a DataFrame."""
@@ -59,6 +70,8 @@ def calculate_invoice_accuracies(ground_truth_list, response_list):
         # If response is an OpenAI object, parse output_text
         if hasattr(pred, "output_text"):
             pred = json.loads(pred.output_text)
+        
+        gt, pred = fix_data_type_mismatch(gt, pred)
         gt_flat = flatten_json(gt)
         gt_flat = apply_postprocessing(gt_flat)
         pred_flat = flatten_json(pred)
@@ -83,6 +96,7 @@ def calculate_invoice_accuracies(ground_truth_list, response_list):
 def key_level_metrics(gt_list, pred_list):
     key_stats = defaultdict(lambda: {'tp': 0, 'fp': 0, 'fn': 0})
     for gt_json, pred_json in zip(gt_list, pred_list):
+        gt_json, pred_json = fix_data_type_mismatch(gt_json, pred_json)
         gt_flat = flatten_json(gt_json)
         gt_flat = apply_postprocessing(gt_flat)
         pred_flat = flatten_json(pred_json)
@@ -121,6 +135,7 @@ def key_level_metrics(gt_list, pred_list):
 def calculate_individual_invoice_accuracies(ground_truth, output):
     """Calculate per-invoice accuracy and return a DataFrame."""
     invoice_metrics = []
+    ground_truth, output = fix_data_type_mismatch(ground_truth, output)
     gt_flat = flatten_json(ground_truth)
     gt_flat = apply_postprocessing(gt_flat)
     pred_flat = flatten_json(output)
