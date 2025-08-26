@@ -1,12 +1,13 @@
 import os
-from io import BytesIO
 from collections import defaultdict
 import base64
 import json
 import mlflow
-import openai
 import pandas as pd
 from tqdm import tqdm
+import io
+from PIL import Image
+from io import BytesIO
 
 
 def pil_to_base64(pil_image):
@@ -96,13 +97,13 @@ def key_level_metrics(gt_list, pred_list):
                 if gt_val == pred_val:
                     key_stats[k]['tp'] += 1
                 else:
-                    print(f"False positive for key '{k}': GT='{gt_val}', Pred='{pred_val}'")
+                    # print(f"False positive for key '{k}': GT='{gt_val}', Pred='{pred_val}'")
                     key_stats[k]['fp'] += 1  # Value present but incorrect
             elif gt_val is not None and pred_val is None:
-                print(f"False negative for key '{k}': GT='{gt_val}', Pred=None")
+                # print(f"False negative for key '{k}': GT='{gt_val}', Pred=None")
                 key_stats[k]['fn'] += 1   # Value missing in prediction
             elif gt_val is None and pred_val is not None:
-                print(f"False positive for key '{k}': GT=None, Pred='{pred_val}'")
+                # print(f"False positive for key '{k}': GT=None, Pred='{pred_val}'")
                 key_stats[k]['fp'] += 1   # Extra key in prediction
     
     # Calculate metrics per key
@@ -125,8 +126,6 @@ def calculate_individual_invoice_accuracies(ground_truth, output):
     pred_flat = flatten_json(output)
     pred_flat = apply_postprocessing(pred_flat)
     total_keys = len(gt_flat)
-    print("<<<<<<<<<< GT Flat: ", gt_flat)
-    print("<<<<<<<<<< Pred Flat: ", pred_flat)
     # Create a dataframe with following columns, ground_truth_value, predicted_value, match (True or False) and calculate the overall accuracy based on the match
     for k in gt_flat:
         invoice_metrics.append({
@@ -136,7 +135,23 @@ def calculate_individual_invoice_accuracies(ground_truth, output):
         })
     invoice_metrics_df = pd.DataFrame(invoice_metrics)
 
-    print("<<<<<<<<<< Invoice Metrics DF: ", invoice_metrics_df)
     accuracy = invoice_metrics_df["match"].mean()
-    print("<<<<<<<<<< Accuracy: ", accuracy)
     return invoice_metrics_df, accuracy
+
+def convert_base64_to_pil(image_base64):
+    """Convert a base64-encoded image to a PIL Image."""
+    image_data = base64.b64decode(image_base64)
+    image = Image.open(io.BytesIO(image_data))
+    return image
+
+def retrieve_token_usage(trace_df):
+    total_input_tokens = 0
+    total_output_tokens = 0
+    for i in range(len(trace_df)):
+        token_dict = json.loads(trace_df["trace_metadata"][i]['mlflow.trace.tokenUsage'])
+        input_tokens = token_dict.get("input_tokens", 0)
+        output_tokens = token_dict.get("output_tokens", 0)
+        total_input_tokens += int(input_tokens)
+        total_output_tokens += int(output_tokens)
+
+    return total_input_tokens, total_output_tokens
